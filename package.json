@@ -21,7 +21,11 @@
         "url": "https://github.com/SlimIO/Gource-view/issues"
     },
     "homepage": "https://github.com/SlimIO/Gource-view#readme",
-    "dependencies": {},
+    "dependencies": {
+        "isomorphic-git": "^0.54.2",
+        "make-promises-safe": "^5.0.0",
+        "repos": "^2.0.0"
+    },
     "devDependencies": {
         "@commitlint/cli": "^7.6.1",
         "@commitlint/config-conventional": "^7.6.0",
