@@ -60,3 +60,9 @@ typings/
 # JSDoc
 docs/
 jsdoc/
+
+clones/*
+logs/*
+!clones/.gitkeep
+!logs/.gitkeep
+!logs/combined/.gitkeep
