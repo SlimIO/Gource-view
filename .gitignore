@@ -1,5 +1,4 @@
 # Logs
-logs
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -62,7 +61,6 @@ docs/
 jsdoc/
 
 clones/*
-logs/*
+logs/*.txt
+logs/combined/*.txt
 !clones/.gitkeep
-!logs/.gitkeep
-!logs/combined/.gitkeep

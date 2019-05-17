@@ -1,0 +1,112 @@
+{
+    "Tools": [
+        "Eslint-config",
+        "tsd",
+        "Discord-Bot",
+        "Generator",
+        "Dependency-Analyser",
+        "psp",
+        "Gource-view"
+    ],
+    "Utils": {
+        "integration": [
+            "Manifest",
+            "CLI",
+            "Addon-Factory",
+            "Tcp-Sdk",
+            "Desktop",
+            "Bundler"
+        ],
+        "CLI": [
+            "Async-cli-spinner",
+            "Pretty-JSON",
+            "lstree",
+            "Arg-parser"
+        ],
+        "API-HTTP" : [
+            "Nodejs-downloader",
+            "github",
+            "Npm-registry"
+        ],
+        "default": [
+            "Utils",
+            "is",
+            "Queue",
+            "Lazy",
+            "Safe-emitter",
+            "unzipper",
+            "Timer",
+            "Mib-Parser",
+            "Immutable",
+            "Struct",
+            "Buffer-Schema",
+            "TimeMap",
+            "jsdoc",
+            "OpenAPI",
+            "Math",
+            "Unit-testing"
+        ]
+    },
+    "Core-Agent": {
+        "addons": {
+            "built-in": [
+                "Events",
+                "Socket",
+                "Gate",
+                "Alerting",
+                "Aggregator"
+            ],
+            "default": [
+                "cpu-addon",
+                "ihm"
+            ]
+        },
+        "default": [
+            "Core",
+            "Agent",
+            "Addon",
+            "Config",
+            "Config-Migration",
+            "ipc",
+            "Alert",
+            "Metrics",
+            "sqlite-transaction",
+            "Scheduler",
+            "Units"
+        ]
+    },
+    "API-HTTP": [
+        "Registry",
+        "Registry-SDK",
+        "documentation",
+        "N-API-CI"
+    ],
+    "C-C++ Binding": {
+        "Windows": [
+            "Windrive",
+            "Winservices",
+            "Winmem",
+            "Winni",
+            "Winelog"
+        ],
+        "UNIX": [
+            "Nixfs",
+            "Nixmem",
+            "Nixdevices",
+            "Nixproc",
+            "Nixni"
+        ],
+        "default": [
+            "Micro",
+            "pam",
+            "cpu"
+        ]
+    },
+    "Archive-Deprecated": [
+        "levelmanager",
+        "AgentOld",
+        "Error",
+        "pm",
+        "CI_TEST"
+    ]
+}
