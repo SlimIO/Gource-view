@@ -10,103 +10,65 @@ const is = require("@slimio/is");
 const fs = require("fs");
 const { readFile } = fs.promises;
 const { join } = require("path");
-const { exec, spawn } = require("child_process");
+const { promisify } = require("util");
+const cp = require("child_process");
 git.plugins.set("fs", fs);
 
+// Require Internal Dependencies
+const { traverseProjectJSON } = require("./src/utils");
+
 // CONSTANT
-const GITHUB_URL = "https://github.com";
 const GITHUB_ORGA = process.env.GITHUB_ORGA;
-const DIR_FILES = join(__dirname, "/logs");
+const ORGA_URL = `https://github.com/${process.env.GITHUB_ORGA}`;
+
 // Global
 const token = process.env.GITHUB_TOKEN;
-const orgaUrl = `${GITHUB_URL}/${process.env.GITHUB_ORGA}`;
-
 const mapper = new Map();
-function getRepoCommitsLogs(repName) {
-    return new Promise((resolve) => {
-        exec(`gource --output-custom-log logs/${repName}.txt clones/${repName}`, () => {
-            const prefix = mapper.has(repName) ? mapper.get(repName) : repName;
-            if (mapper.has(repName) === false) {
-                console.log(`REPNAME: ${repName}`);
-            }
-            exec(`sed -i -r "s#(.+)\\|#\\1|/${prefix}#" logs/${repName}.txt`, resolve);
-        });
-    });
-}
+const exec = promisify(cp.exec);
 
 async function cloneRep(repName) {
     const dir = join(__dirname, "clones", repName);
-    const url = `${orgaUrl}/${repName}`;
-    console.log(url);
-    try {
-        // console.log(`${repName} start`);
-        await git.clone({
-            dir,
-            url,
-            singleBranch: true,
-            noCheckout: true,
-            oauth2format: "github",
-            token
-        });
-        console.log(`${repName} cloned`);
-        await getRepoCommitsLogs(repName);
-    }
-    catch (err) {
-        console.log(`${url} failed`);
-        throw err;
-    }
+    const url = `${ORGA_URL}/${repName}`;
+
+    console.log(`Cloning: ${url}`);
+    await git.clone({
+        dir, url, token,
+        singleBranch: true,
+        noCheckout: true,
+        oauth2format: "github"
+    });
+
+    const prefix = mapper.has(repName) ? mapper.get(repName) : repName;
+    await exec(`gource --output-custom-log logs/${repName}.txt clones/${repName}`);
+    await exec(`sed -i -r "s#(.+)\\|#\\1|/${prefix}#" logs/${repName}.txt`);
 }
 
 async function getAllRepo() {
     const allRepositories = await repos(process.env.GITHUB_ORGA, { token });
-    const allRepoName = allRepositories.map((obj) => obj.name);
-    // console.log(allRepoName);
-
     const rejects = [];
-    console.log("Run all");
-    const result = await Promise.all(allRepoName.map((repName) => cloneRep(repName).catch(rejects.push)));
-    for (const reject of rejects) {
-        console.log(reject);
-        console.log();
-    }
 
-    exec("cat logs/*.txt | sort > logs/combined/fullLog.txt", () => {
-        spawn("gource.cmd", ["logs/combined/fullLog.txt", "-s", "0.75"]);
-    });
+    await Promise.all(
+        allRepositories.map((repo) => cloneRep(repo.name).catch(rejects.push))
+    );
+    rejects.forEach((err) => console.error(err));
+
+    await exec("cat logs/*.txt | sort > logs/combined/fullLog.txt");
+    cp.spawn("gource.cmd", ["logs/combined/fullLog.txt", "-s", "0.2"]);
 }
 
-function* recursive(elem, str = "") {
-    const prefix = str === "" ? "" : `${str}/`;
-    if (is.plainObject(elem)) {
-        for (const [key, value] of Object.entries(elem)) {
-            yield* recursive(value, `${prefix}${key === "default" ? "" : key}`);
-        }
-    }
-    else if (is.array(elem)) {
-        for (const depName of elem) {
-            yield [depName, `${prefix}${depName}`];
-        }
-    }
-}
-
-async function mapping() {
+async function main() {
     try {
-        const path = `./repoMapping/${GITHUB_ORGA}.json`;
-        const buffer = await readFile(path);
+        const buffer = await readFile(`./repoMapping/${GITHUB_ORGA}.json`);
         const mappingJSON = JSON.parse(buffer.toString());
 
-        for (const [depName, str] of recursive(mappingJSON)) {
+        for (const [depName, str] of traverseProjectJSON(mappingJSON)) {
             mapper.set(depName, str);
         }
-        console.log(mapper);
     }
     catch (err) {
         console.error(err);
     }
-}
 
-async function main() {
-    await mapping();
     await getAllRepo();
 }
 main().catch(console.error);
