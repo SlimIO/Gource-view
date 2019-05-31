@@ -22,7 +22,7 @@ const GITHUB_ORGA = process.env.GITHUB_ORGA;
 const ORGA_URL = `https://github.com/${process.env.GITHUB_ORGA}`;
 
 // Global
-const token = process.env.GITHUB_TOKEN;
+const token = "d26a4136a6c0f1e007540a66838e52e9f56af8a2";
 const mapper = new Map();
 const exec = promisify(cp.exec);
 
@@ -72,4 +72,3 @@ async function main() {
     await getAllRepo();
 }
 main().catch(console.error);
-

@@ -1,22 +1,31 @@
 # gource-view
-![version](https://img.shields.io/badge/version-0.1.0-blue.svg)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/SlimIO/is/commit-activity)
+![Version](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/SlimIO/Gource-view/master/package.json?token=Aeue0P3eryCYRikk9tHZScyXOpqtMvFIks5ca-XwwA%3D%3D&query=$.version&label=Version)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/SlimIO/Gource-view/commit-activity)
 ![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)
-
-
+![dep](https://img.shields.io/david/SlimIO/Gource-view.svg)
+![size](https://img.shields.io/github/repo-size/SlimIO/Gource-view.svg)
+[![Known Vulnerabilities](https://snyk.io/test/github/SlimIO/Gource-view/badge.svg?targetFile=package.json)](https://snyk.io/test/github/SlimIO/Gource-view?targetFile=package.json)
 
 ## Requirements
 - Node.js v10 or higher
+- [Gource](https://gource.io/)
+
+> ⚠️ gource.cmd must be available in path
 
 ## Getting Started
 
-This package is available in the Node Package Repository and can be easily installed with [npm](https://docs.npmjs.com/getting-started/what-is-npm) or [yarn](https://yarnpkg.com).
-
 ```bash
-$ npm i @slimio/gource-view
-# or
-$ yarn add @slimio/gource-view
+$ git clone https://github.com/SlimIO/Gource-view.git
+$ npm install
 ```
+
+Then create a local `.env` file with a Personal Github token
+```
+GITHUB_TOKEN=
+GITHUB_ORGA=SlimIO
+```
+
+Then, run `npm start`.
 
 ## Usage example
 TBC
