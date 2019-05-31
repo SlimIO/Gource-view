@@ -37,10 +37,10 @@ TBC
 
 |Name|Refactoring|Security Risk|Usage|
 |---|---|---|---|
-|[@slimio/is](https://github.com/SlimIO/is#readme)|Minor|Low|Type checker|
-|[isomorphic-git](https://isomorphic-git.org/)|⚠️Major|High|JS GIT implementation|
-|[make-promises-safe](https://github.com/mcollina/make-promises-safe#readme)|⚠️Major|Low|Promise not exit procces when fail|
-|[repos](https://github.com/jonschlinkert/repos)|⚠️Major|High|Get all repo|
+|[@slimio/is](https://github.com/SlimIO/is#readme)|Minor|Low|Type Checker|
+|[isomorphic-git](https://isomorphic-git.org/)|⚠️Major|High|JavaScript GIT Implementation|
+|[make-promises-safe](https://github.com/mcollina/make-promises-safe#readme)|Minor|Low|Force Node.js DEP00018|
+|[repos](https://github.com/jonschlinkert/repos)|⚠️Major|Minor|TBC|
 
 ## License
 MIT

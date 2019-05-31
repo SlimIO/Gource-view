@@ -1,7 +1,7 @@
 {
     "name": "@slimio/gource-view",
     "version": "0.1.0",
-    "description": "",
+    "description": "Gource Generator for SlimIO",
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
@@ -14,7 +14,13 @@
         "type": "git",
         "url": "git+https://github.com/SlimIO/Gource-view.git"
     },
-    "keywords": [],
+    "keywords": [
+        "SlimIO",
+        "organization",
+        "gource",
+        "generator",
+        "github"
+    ],
     "author": "SlimIO",
     "license": "MIT",
     "bugs": {
