@@ -27,12 +27,6 @@ GITHUB_ORGA=SlimIO
 
 Then, run `npm start`.
 
-## Usage example
-TBC
-
-## API
-TBC
-
 ## Dependencies
 
 |Name|Refactoring|Security Risk|Usage|
