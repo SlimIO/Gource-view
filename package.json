@@ -29,6 +29,7 @@
     "homepage": "https://github.com/SlimIO/Gource-view#readme",
     "dependencies": {
         "@slimio/is": "^1.5.0",
+        "dotenv": "^8.0.0",
         "isomorphic-git": "^0.55.2",
         "make-promises-safe": "^5.0.0",
         "repos": "^2.0.0"
@@ -42,7 +43,6 @@
         "ava": "^1.4.1",
         "c8": "^5.0.1",
         "cross-env": "^5.2.0",
-        "dotenv": "^8.0.0",
         "eslint": "^5.16.0",
         "husky": "^2.3.0",
         "jsdoc": "^3.6.2",
