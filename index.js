@@ -4,7 +4,6 @@ require("dotenv").config();
 // Require Third-party Dependencies
 const repos = require("repos");
 const git = require("isomorphic-git");
-const is = require("@slimio/is");
 
 // Require Node.js Dependencies
 const fs = require("fs");
@@ -22,7 +21,7 @@ const GITHUB_ORGA = process.env.GITHUB_ORGA;
 const ORGA_URL = `https://github.com/${process.env.GITHUB_ORGA}`;
 
 // Global
-const token = process.env.GIT_TOKEN;
+const token = process.env.GITHUB_TOKEN;
 const mapper = new Map();
 const exec = promisify(cp.exec);
 
@@ -48,7 +47,7 @@ async function getAllRepo() {
     const rejects = [];
 
     await Promise.all(
-        allRepositories.map((repo) => cloneRep(repo.name).catch(rejects.push))
+        allRepositories.map((repo) => cloneRep(repo.name).catch((err) => rejects.push(err)))
     );
     rejects.forEach((err) => console.error(err));
 
