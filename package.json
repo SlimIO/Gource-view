@@ -30,7 +30,7 @@
     "dependencies": {
         "@slimio/is": "^1.5.1",
         "dotenv": "^8.0.0",
-        "isomorphic-git": "^0.55.2",
+        "isomorphic-git": "^0.55.6",
         "make-promises-safe": "^5.0.0",
         "repos": "^2.0.0"
     },
