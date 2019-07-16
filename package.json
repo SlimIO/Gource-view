@@ -28,7 +28,7 @@
     },
     "homepage": "https://github.com/SlimIO/Gource-view#readme",
     "dependencies": {
-        "@slimio/is": "^1.5.0",
+        "@slimio/is": "^1.5.1",
         "dotenv": "^8.0.0",
         "isomorphic-git": "^0.55.2",
         "make-promises-safe": "^5.0.0",
