@@ -1,6 +1,14 @@
+"use strict";
+
 // Require Third-party Dependencies
 const is = require("@slimio/is");
 
+/**
+ * @generator
+ * @function traverseProjectJSON
+ * @param {*} elem
+ * @param {*} [str]
+ */
 function* traverseProjectJSON(elem, str = "") {
     const prefix = str === "" ? "" : `${str}/`;
     if (is.plainObject(elem)) {

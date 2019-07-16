@@ -1,3 +1,5 @@
+"use strict";
+
 require("make-promises-safe");
 require("dotenv").config();
 
@@ -25,6 +27,12 @@ const token = process.env.GITHUB_TOKEN;
 const mapper = new Map();
 const exec = promisify(cp.exec);
 
+/**
+ * @async
+ * @function cloneRep
+ * @param {!string} repName
+ * @returns {Promise<void>}
+ */
 async function cloneRep(repName) {
     const dir = join(__dirname, "clones", repName);
     const url = `${ORGA_URL}/${repName}`;
@@ -42,6 +50,11 @@ async function cloneRep(repName) {
     await exec(`sed -i -r "s#(.+)\\|#\\1|/${prefix}#" logs/${repName}.txt`);
 }
 
+/**
+ * @async
+ * @function getAllRepo
+ * @returns {Promise<void>}
+ */
 async function getAllRepo() {
     const allRepositories = await repos(process.env.GITHUB_ORGA, { token });
     const rejects = [];
@@ -55,6 +68,11 @@ async function getAllRepo() {
     cp.spawn("gource.cmd", ["logs/combined/fullLog.txt", "-s", "0.2"]);
 }
 
+/**
+ * @async
+ * @function main
+ * @returns {Promise<void>}
+ */
 async function main() {
     try {
         const buffer = await readFile(`./repoMapping/${GITHUB_ORGA}.json`);
