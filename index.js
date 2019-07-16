@@ -46,8 +46,8 @@ async function cloneRep(repName) {
     });
 
     const prefix = mapper.has(repName) ? mapper.get(repName) : repName;
-    await exec(`gource --output-custom-log logs/${repName}.txt clones/${repName}`);
-    await exec(`sed -i -r "s#(.+)\\|#\\1|/${prefix}#" logs/${repName}.txt`);
+    await exec(`gource --output-custom-log history/${repName}.txt clones/${repName}`);
+    await exec(`sed -i -r "s#(.+)\\|#\\1|/${prefix}#" history/${repName}.txt`);
 }
 
 /**
@@ -64,8 +64,8 @@ async function getAllRepo() {
     );
     rejects.forEach((err) => console.error(err));
 
-    await exec("cat logs/*.txt | sort > logs/combined/fullLog.txt");
-    cp.spawn("gource.cmd", ["logs/combined/fullLog.txt", "-s", "0.2"]);
+    await exec("cat history/*.txt | sort > history/combined/fullLog.txt");
+    cp.spawn("gource.cmd", ["history/combined/fullLog.txt", "-s", "0.2"]);
 }
 
 /**
