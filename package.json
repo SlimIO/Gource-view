@@ -23,8 +23,6 @@
     ],
     "files": [
         "index.js",
-        ".eslintignore",
-        "slimio.toml",
         "src",
         "repoMapping",
         "history"
