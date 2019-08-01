@@ -21,6 +21,14 @@
         "generator",
         "github"
     ],
+    "files": [
+        "index.js",
+        ".eslintignore",
+        "slimio.toml",
+        "src",
+        "repoMapping",
+        "history"
+    ],
     "author": "SlimIO",
     "license": "MIT",
     "bugs": {
