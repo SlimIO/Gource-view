@@ -112,7 +112,10 @@ async function main() {
         await getAllRepo();
     }
     finally {
-        await premove(join(__dirname, "clones"));
+        await Promise.all([
+            premove(join(__dirname, "history")),
+            premove(join(__dirname, "clones"))
+        ]);
     }
 }
 main().catch(console.error);
