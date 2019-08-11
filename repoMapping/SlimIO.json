@@ -31,6 +31,7 @@
             "Npm-registry"
         ],
         "default": [
+            "clean-cache",
             "Lock",
             "pretty-stack",
             "Iterator",
@@ -81,6 +82,7 @@
             "Metrics",
             "sqlite-transaction",
             "Profiles",
+            "logger",
             "Scheduler",
             "Units"
         ]
