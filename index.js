@@ -82,7 +82,7 @@ async function getAllRepo() {
  */
 async function main() {
     try {
-        const buffer = await readFile(`./repoMapping/${GITHUB_ORGA}.json`);
+        const buffer = await readFile(join(__dirname, "src", "config", `${GITHUB_ORGA}.json`));
         const mappingJSON = JSON.parse(buffer.toString());
 
         for (const [depName, str] of traverseProjectJSON(mappingJSON)) {
