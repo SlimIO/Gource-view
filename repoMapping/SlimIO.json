@@ -6,7 +6,9 @@
         "Generator",
         "Dependency-Analyser",
         "psp",
-        "Gource-view"
+        "Gource-view",
+        "Sync",
+        "Markdown-Dependencies"
     ],
     "Utils": {
         "integration": [
@@ -29,6 +31,10 @@
             "Npm-registry"
         ],
         "default": [
+            "Lock",
+            "pretty-stack",
+            "Iterator",
+            "arg-checker",
             "Utils",
             "is",
             "Queue",
@@ -58,7 +64,10 @@
             ],
             "default": [
                 "cpu-addon",
-                "ihm"
+                "ihm",
+                "FSC",
+                "MySQL",
+                "Prism"
             ]
         },
         "default": [
@@ -71,6 +80,7 @@
             "Alert",
             "Metrics",
             "sqlite-transaction",
+            "Profiles",
             "Scheduler",
             "Units"
         ]
@@ -79,7 +89,8 @@
         "Registry",
         "Registry-SDK",
         "documentation",
-        "N-API-CI"
+        "N-API-CI",
+        "Grapher"
     ],
     "C-C++ Binding": {
         "Windows": [
