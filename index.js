@@ -9,8 +9,8 @@ const git = require("isomorphic-git");
 
 // Require Node.js Dependencies
 const fs = require("fs");
-const { readFile } = fs.promises;
-const { join } = require("path");
+const { readFile, readdir, unlink } = fs.promises;
+const { join, extname } = require("path");
 const { promisify } = require("util");
 const cp = require("child_process");
 git.plugins.set("fs", fs);
@@ -22,6 +22,7 @@ const { traverseProjectJSON } = require("./src/utils");
 const GITHUB_ORGA = process.env.GITHUB_ORGA;
 const ORGA_URL = `https://github.com/${process.env.GITHUB_ORGA}`;
 const EXCLUDED = new Set(["blog"]);
+const HISTORY_DIR = join(__dirname, "history");
 
 // Global
 const token = process.env.GITHUB_TOKEN;
@@ -58,6 +59,7 @@ async function cloneRep(repName) {
  */
 async function getAllRepo() {
     const allRepositories = await fetch(process.env.GITHUB_ORGA, { token, kind: "orgs" });
+    console.log(` > Retrieved ${allRepositories.length} repositories from ORG: ${process.env.GITHUB_ORGA}\n`);
     const rejects = [];
 
     await Promise.all(
@@ -90,6 +92,18 @@ async function main() {
         console.error(err);
     }
 
+    // Cleanup history dir
+    try {
+        const files = await readdir(HISTORY_DIR);
+        await Promise.all(
+            files.filter((file) => extname(file) === ".txt").map((file) => unlink(join(HISTORY_DIR, file)))
+        );
+    }
+    catch (err) {
+        // Ignore
+    }
+
+    // Process Repositories
     await getAllRepo();
 }
 main().catch(console.error);
