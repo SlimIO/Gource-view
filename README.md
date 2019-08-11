@@ -34,7 +34,8 @@ Then, run `npm start`.
 |[@slimio/is](https://github.com/SlimIO/is#readme)|Minor|Low|Type Checker|
 |[isomorphic-git](https://isomorphic-git.org/)|⚠️Major|High|JavaScript GIT Implementation|
 |[make-promises-safe](https://github.com/mcollina/make-promises-safe#readme)|Minor|Low|Force Node.js DEP00018|
-|[repos](https://github.com/jonschlinkert/repos)|⚠️Major|Minor|TBC|
+|[fetch-github-repositories](https://github.com/fraxken/fetch-github-repositories#readme)|Minor|Low|Fetch github repositories|
+|[premove](https://github.com/lukeed/premove#readme)|Minor|Low|Remove recursively|
 
 ## License
 MIT
