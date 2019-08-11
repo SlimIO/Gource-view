@@ -4,7 +4,7 @@ require("make-promises-safe");
 require("dotenv").config();
 
 // Require Third-party Dependencies
-const repos = require("repos");
+const { fetch } = require("fetch-github-repositories");
 const git = require("isomorphic-git");
 
 // Require Node.js Dependencies
@@ -21,6 +21,7 @@ const { traverseProjectJSON } = require("./src/utils");
 // CONSTANT
 const GITHUB_ORGA = process.env.GITHUB_ORGA;
 const ORGA_URL = `https://github.com/${process.env.GITHUB_ORGA}`;
+const EXCLUDED = new Set(["blog"]);
 
 // Global
 const token = process.env.GITHUB_TOKEN;
@@ -56,11 +57,14 @@ async function cloneRep(repName) {
  * @returns {Promise<void>}
  */
 async function getAllRepo() {
-    const allRepositories = await repos(process.env.GITHUB_ORGA, { token });
+    const allRepositories = await fetch(process.env.GITHUB_ORGA, { token, kind: "orgs" });
     const rejects = [];
 
     await Promise.all(
-        allRepositories.map((repo) => cloneRep(repo.name).catch((err) => rejects.push(err)))
+        allRepositories
+            .filter((repo) => !EXCLUDED.has(repo.name.toLowerCase()))
+            .filter((repo) => repo.fork === false)
+            .map((repo) => cloneRep(repo.name).catch((err) => rejects.push(err)))
     );
     rejects.forEach((err) => console.error(err));
 
