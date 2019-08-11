@@ -6,11 +6,17 @@
 ![size](https://img.shields.io/github/repo-size/SlimIO/Gource-view.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/SlimIO/Gource-view/badge.svg?targetFile=package.json)](https://snyk.io/test/github/SlimIO/Gource-view?targetFile=package.json)
 
+Gource generator for github organization.
+
+<p align="center">
+    <img src="https://i.imgur.com/dcyPhXg.png">
+</p>
+
 ## Requirements
-- Node.js v10 or higher
+- [Node.js](https://nodejs.org/en/) v10 or higher
 - [Gource](https://gource.io/)
 
-> ⚠️ gource.cmd must be available in path
+> ⚠️ gource.cmd must be available in the Windows path
 
 ## Getting Started
 
@@ -26,6 +32,9 @@ GITHUB_ORGA=SlimIO
 ```
 
 Then, run `npm start`.
+
+## Creating categories
+It's possible to create categories (like branch) by creating a config file for your Organization (like SlimIO). For example please take a look at `src/config/SlimIO.json`.
 
 ## Dependencies
 
