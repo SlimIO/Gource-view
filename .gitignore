@@ -61,9 +61,5 @@ typings/
 docs/
 jsdoc/
 
-clones/*
-history/*
 logs/*.txt
 logs/combined/*.txt
-!clones/.gitkeep
-!history/.gitkeep

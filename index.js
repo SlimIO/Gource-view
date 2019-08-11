@@ -9,11 +9,11 @@ const git = require("isomorphic-git");
 
 // Require Node.js Dependencies
 const fs = require("fs");
-const { readFile, readdir, unlink } = fs.promises;
+const { readFile, readdir, unlink, mkdir } = fs.promises;
 const { join, extname } = require("path");
 const { promisify } = require("util");
 const cp = require("child_process");
-git.plugins.set("fs", fs);
+const premove = require("premove");
 
 // Require Internal Dependencies
 const { traverseProjectJSON } = require("./src/utils");
@@ -27,6 +27,7 @@ const HISTORY_DIR = join(__dirname, "history");
 // Global
 const token = process.env.GITHUB_TOKEN;
 const mapper = new Map();
+git.plugins.set("fs", fs);
 const exec = promisify(cp.exec);
 
 /**
@@ -92,6 +93,9 @@ async function main() {
         console.error(err);
     }
 
+    // Create history/combined
+    await mkdir(join(HISTORY_DIR, "combined"), { recursive: true });
+
     // Cleanup history dir
     try {
         const files = await readdir(HISTORY_DIR);
@@ -104,6 +108,11 @@ async function main() {
     }
 
     // Process Repositories
-    await getAllRepo();
+    try {
+        await getAllRepo();
+    }
+    finally {
+        await premove(join(__dirname, "clones"));
+    }
 }
 main().catch(console.error);
