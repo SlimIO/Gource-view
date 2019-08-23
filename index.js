@@ -72,7 +72,11 @@ async function getAllRepo() {
     rejects.forEach((err) => console.error(err));
 
     await exec("cat history/*.txt | sort > history/combined/fullLog.txt");
-    cp.spawn("gource.cmd", ["history/combined/fullLog.txt", "-s", "0.2"]);
+    const child = cp.spawn("gource.cmd", ["history/combined/fullLog.txt", "-s", "0.2"]);
+    await new Promise((resolve, reject) => {
+        child.once("close", resolve);
+        child.once("error", reject);
+    });
 }
 
 /**
@@ -90,7 +94,8 @@ async function main() {
         }
     }
     catch (err) {
-        console.error(err);
+        console.log("Failed to load categories configuration!");
+        // Ignore
     }
 
     // Create history/combined
