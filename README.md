@@ -22,16 +22,20 @@ Gource generator for github organization.
 
 ```bash
 $ git clone https://github.com/SlimIO/Gource-view.git
-$ npm install
+$ cd Gource-view
+$ npm ci
+$ npm start
 ```
 
-Then create a local `.env` file with a Personal Github token
+## Environment Variables
+
+To configure the project you have to register (set) environment variables on your system. These variables can be set in a **.env** file (that file must be created at the root of the project).
 ```
-GITHUB_TOKEN=
+GIT_TOKEN=
 GITHUB_ORGA=SlimIO
 ```
 
-Then, run `npm start`.
+To known how to get a **GIT_TOKEN** or how to register environment variables follow our [Governance Guide](https://github.com/SlimIO/Governance/blob/master/docs/tooling.md#environment-variables).
 
 ## Creating categories
 It's possible to create categories (like branch) by creating a config file for your Organization (like SlimIO). For example please take a look at `src/config/SlimIO.json`.
