@@ -19,13 +19,13 @@ const premove = require("premove");
 const { traverseProjectJSON } = require("./src/utils");
 
 // CONSTANT
-const GITHUB_ORGA = process.env.GITHUB_ORGA;
+const GITHUB_ORGA = typeof process.env.GITHUB_ORGA === "string" ? process.env.GITHUB_ORGA : "SlimIO";
 const ORGA_URL = `https://github.com/${process.env.GITHUB_ORGA}`;
 const EXCLUDED = new Set(["blog"]);
 const HISTORY_DIR = join(__dirname, "history");
 
 // Global
-const token = process.env.GITHUB_TOKEN;
+const token = process.env.GIT_TOKEN;
 const mapper = new Map();
 git.plugins.set("fs", fs);
 const exec = promisify(cp.exec);
