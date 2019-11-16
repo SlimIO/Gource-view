@@ -9,11 +9,10 @@ const git = require("isomorphic-git");
 
 // Require Node.js Dependencies
 const fs = require("fs");
-const { readFile, readdir, unlink, mkdir } = fs.promises;
+const { readFile, readdir, unlink, mkdir, rmdir } = fs.promises;
 const { join, extname } = require("path");
 const { promisify } = require("util");
 const cp = require("child_process");
-const premove = require("premove");
 
 // Require Internal Dependencies
 const { traverseProjectJSON } = require("./src/utils");
@@ -118,8 +117,8 @@ async function main() {
     }
     finally {
         await Promise.all([
-            premove(join(__dirname, "history")),
-            premove(join(__dirname, "clones"))
+            rmdir(join(__dirname, "history"), { recursive: true }),
+            rmdir(join(__dirname, "clones"), { recursive: true })
         ]);
     }
 }

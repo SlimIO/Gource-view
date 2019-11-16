@@ -36,8 +36,7 @@
         "dotenv": "^8.1.0",
         "fetch-github-repositories": "^2.0.0",
         "isomorphic-git": "^0.60.1",
-        "make-promises-safe": "^5.0.0",
-        "premove": "^1.0.0"
+        "make-promises-safe": "^5.0.0"
     },
     "devDependencies": {
         "@commitlint/cli": "^8.2.0",
