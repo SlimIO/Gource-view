@@ -5,6 +5,7 @@
 ![dep](https://img.shields.io/david/SlimIO/Gource-view.svg)
 ![size](https://img.shields.io/github/repo-size/SlimIO/Gource-view.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/SlimIO/Gource-view/badge.svg?targetFile=package.json)](https://snyk.io/test/github/SlimIO/Gource-view?targetFile=package.json)
+[![Build Status](https://travis-ci.com/SlimIO/Gource-view.svg?branch=master)](https://travis-ci.com/SlimIO/Gource-view)
 
 Gource generator for github organization.
 
