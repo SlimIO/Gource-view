@@ -23,9 +23,7 @@
     ],
     "files": [
         "index.js",
-        "src",
-        "repoMapping",
-        "history"
+        "src"
     ],
     "author": "SlimIO",
     "license": "MIT",
