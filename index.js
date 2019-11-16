@@ -3,16 +3,16 @@
 require("make-promises-safe");
 require("dotenv").config();
 
-// Require Third-party Dependencies
-const { fetch } = require("fetch-github-repositories");
-const git = require("isomorphic-git");
-
 // Require Node.js Dependencies
 const fs = require("fs");
 const { readFile, readdir, unlink, mkdir, rmdir } = fs.promises;
 const { join, extname } = require("path");
 const { promisify } = require("util");
 const cp = require("child_process");
+
+// Require Third-party Dependencies
+const { fetch } = require("fetch-github-repositories");
+const git = require("isomorphic-git");
 
 // Require Internal Dependencies
 const { traverseProjectJSON } = require("./src/utils");
@@ -32,6 +32,7 @@ const exec = promisify(cp.exec);
 /**
  * @async
  * @function cloneRep
+ * @description clone a given repository from github
  * @param {!string} repName
  * @returns {Promise<void>}
  */
@@ -55,6 +56,7 @@ async function cloneRep(repName) {
 /**
  * @async
  * @function getAllRepo
+ * @description retrieve all github repositories of the given organization (configured in env)
  * @returns {Promise<void>}
  */
 async function getAllRepo() {
