@@ -13,7 +13,7 @@ Gource generator for github organization.
 </p>
 
 ## Requirements
-- [Node.js](https://nodejs.org/en/) v10 or higher
+- [Node.js](https://nodejs.org/en/) v12 or higher
 - [Gource](https://gource.io/)
 
 > ⚠️ gource.cmd must be available in the Windows path
