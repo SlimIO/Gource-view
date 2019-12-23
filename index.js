@@ -65,15 +65,15 @@ async function cloneRep(orgaName, repName) {
 async function getAllRepo(orgaName, kind = "orgs") {
     const allRepositories = await fetch(orgaName, { token, kind });
     console.log(` > Retrieved ${allRepositories.length} repositories from ${kind}: ${GITHUB_ORGA}\n`);
-    const rejects = [];
 
-    await Promise.all(
+    const cloneResults = await Promise.allSettled(
         allRepositories
             .filter((repo) => !EXCLUDED.has(repo.name.toLowerCase()))
             .filter((repo) => repo.fork === false)
-            .map((repo) => cloneRep(orgaName, repo.name).catch((err) => rejects.push(err)))
+            .map((repo) => cloneRep(orgaName, repo.name))
     );
-    rejects.forEach((err) => console.error(err));
+
+    cloneResults.filter((result) => result.status === "rejected").forEach((result) => console.error(result.reason));
 }
 
 /**
@@ -101,7 +101,7 @@ async function main() {
     // Cleanup history dir
     try {
         const files = await readdir(HISTORY_DIR);
-        await Promise.all(
+        await Promise.allSettled(
             files.filter((file) => extname(file) === ".txt").map((file) => unlink(join(HISTORY_DIR, file)))
         );
     }
