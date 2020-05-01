@@ -1,72 +1,76 @@
 {
-    "name": "@slimio/gource-view",
-    "version": "0.1.0",
-    "description": "Gource Generator for SlimIO",
-    "main": "index.js",
-    "scripts": {
-        "start": "node index.js",
-        "prepublishOnly": "pkg-ok",
-        "test": "cross-env psp && ava --verbose",
-        "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose",
-        "coverage": "c8 -r=\"html\" npm test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/SlimIO/Gource-view.git"
-    },
-    "keywords": [
-        "SlimIO",
-        "organization",
-        "gource",
-        "generator",
-        "github"
-    ],
-    "files": [
-        "index.js",
-        "src"
-    ],
-    "author": "SlimIO",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/SlimIO/Gource-view/issues"
-    },
-    "homepage": "https://github.com/SlimIO/Gource-view#readme",
-    "dependencies": {
-        "@slimio/is": "^1.5.1",
-        "dotenv": "^8.2.0",
-        "fetch-github-repositories": "^2.0.0",
-        "isomorphic-git": "^0.72.0",
-        "make-promises-safe": "^5.1.0"
-    },
-    "devDependencies": {
-        "@commitlint/cli": "^8.2.0",
-        "@commitlint/config-conventional": "^8.2.0",
-        "@escommunity/minami": "^1.0.0",
-        "@slimio/eslint-config": "^4.0.0",
-        "@slimio/psp": "^0.10.0",
-        "ava": "^2.4.0",
-        "c8": "^7.0.0",
-        "cross-env": "^6.0.3",
-        "eslint": "^6.8.0",
-        "husky": "^3.1.0",
-        "jsdoc": "^3.6.3",
-        "pkg-ok": "^2.3.1"
-    },
-    "engines": {
-        "node": ">=12"
-    },
-    "husky": {
-        "hooks": {
-            "pre-push": "cross-env eslint index.js src/*.js && npm test",
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-        }
-    },
-    "nyc": {
-        "check-coverage": true,
-        "per-file": false,
-        "lines": 98,
-        "statements": 98,
-        "functions": 98,
-        "branches": 90
+  "name": "@slimio/gource-view",
+  "version": "0.1.0",
+  "description": "Gource Generator for SlimIO",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "prepublishOnly": "pkg-ok",
+    "test": "cross-env psp && ava --verbose",
+    "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose",
+    "coverage": "c8 -r=\"html\" npm test",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SlimIO/Gource-view.git"
+  },
+  "keywords": [
+    "SlimIO",
+    "organization",
+    "gource",
+    "generator",
+    "github"
+  ],
+  "files": [
+    "index.js",
+    "src"
+  ],
+  "author": "SlimIO",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SlimIO/Gource-view/issues"
+  },
+  "homepage": "https://github.com/SlimIO/Gource-view#readme",
+  "dependencies": {
+    "@slimio/is": "^1.5.1",
+    "dotenv": "^8.2.0",
+    "fetch-github-repositories": "^2.0.0",
+    "isomorphic-git": "^0.72.0",
+    "make-promises-safe": "^5.1.0",
+    "snyk": "^1.316.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@escommunity/minami": "^1.0.0",
+    "@slimio/eslint-config": "^4.0.0",
+    "@slimio/psp": "^0.10.0",
+    "ava": "^2.4.0",
+    "c8": "^7.0.0",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.8.0",
+    "husky": "^3.1.0",
+    "jsdoc": "^3.6.3",
+    "pkg-ok": "^2.3.1"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "cross-env eslint index.js src/*.js && npm test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "nyc": {
+    "check-coverage": true,
+    "per-file": false,
+    "lines": 98,
+    "statements": 98,
+    "functions": 98,
+    "branches": 90
+  },
+  "snyk": true
 }
