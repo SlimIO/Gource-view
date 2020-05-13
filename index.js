@@ -12,6 +12,7 @@ const cp = require("child_process");
 
 // Require Third-party Dependencies
 const { fetch } = require("fetch-github-repositories");
+const http = require("isomorphic-git/http/node");
 const git = require("isomorphic-git");
 
 // Require Internal Dependencies
@@ -26,7 +27,6 @@ const HISTORY_DIR = join(__dirname, "history");
 // Global
 const token = process.env.GIT_TOKEN;
 const mapper = new Map();
-git.plugins.set("fs", fs);
 const exec = promisify(cp.exec);
 
 /**
@@ -43,15 +43,27 @@ async function cloneRep(orgaName, repName) {
 
     console.log(`Cloning: ${url}`);
     await git.clone({
-        dir, url, token,
+        fs, http, dir, url,
+        onAuth() {
+            return { username: process.env.GIT_TOKEN, password: "x-oauth-basic" };
+        },
         singleBranch: true,
         noCheckout: true,
-        oauth2format: "github"
+        corsProxy: "https://cors.isomorphic-git.org"
     });
 
     const prefix = mapper.has(repName) ? mapper.get(repName) : repName;
     await exec(`gource --output-custom-log history/${repName}.txt clones/${repName}`);
     await exec(`sed -i -r "s#(.+)\\|#\\1|/${prefix}#" history/${repName}.txt`);
+}
+
+/**
+ * @function cloneError
+ * @param {!any} error error
+ * @returns {void}
+ */
+function cloneError(error) {
+    console.error(error);
 }
 
 /**
@@ -73,7 +85,7 @@ async function getAllRepo(orgaName, kind = "orgs") {
             .map((repo) => cloneRep(orgaName, repo.name))
     );
 
-    cloneResults.filter((result) => result.status === "rejected").forEach((result) => console.error(result.reason));
+    cloneResults.filter((result) => result.status === "rejected").forEach(cloneError);
 }
 
 /**
