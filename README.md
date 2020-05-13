@@ -6,7 +6,6 @@
 ![size](https://img.shields.io/github/repo-size/SlimIO/Gource-view.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/SlimIO/Gource-view/badge.svg?targetFile=package.json)](https://snyk.io/test/github/SlimIO/Gource-view?targetFile=package.json)
 [![Build Status](https://travis-ci.com/SlimIO/Gource-view.svg?branch=master)](https://travis-ci.com/SlimIO/Gource-view)
-[![Greenkeeper badge](https://badges.greenkeeper.io/SlimIO/Gource-view.svg)](https://greenkeeper.io/)
 
 Gource generator for github organization.
 
