@@ -35,7 +35,7 @@
         "@slimio/is": "^1.5.1",
         "dotenv": "^8.2.0",
         "fetch-github-repositories": "^2.0.0",
-        "isomorphic-git": "^1.4.0",
+        "isomorphic-git": "^1.7.0",
         "make-promises-safe": "^5.1.0"
     },
     "devDependencies": {
