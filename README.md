@@ -16,6 +16,7 @@ Gource generator for github organization.
 ## Requirements
 - [Node.js](https://nodejs.org/en/) v12 or higher
 - [Gource](https://gource.io/)
+- [Sed](https://fr.wikipedia.org/wiki/Stream_Editor) version 4 or higher on your local system.
 
 > ⚠️ gource.cmd must be available in the Windows path
 

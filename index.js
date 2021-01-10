@@ -14,6 +14,10 @@ const cp = require("child_process");
 const { fetch } = require("fetch-github-repositories");
 const http = require("isomorphic-git/http/node");
 const git = require("isomorphic-git");
+const ms = require("ms");
+const kleur = require("kleur");
+const Locker = require("@slimio/lock");
+const Spinner = require("@slimio/async-cli-spinner");
 
 // Require Internal Dependencies
 const { traverseProjectJSON } = require("./src/utils");
@@ -23,8 +27,10 @@ const GITHUB_ORGA = typeof process.env.GITHUB_ORGA === "string" ? process.env.GI
 const GITHUB_KIND = typeof process.env.GITHUB_KIND === "string" ? process.env.GITHUB_KIND : "orgs";
 const EXCLUDED = new Set(["blog"]);
 const HISTORY_DIR = join(__dirname, "history");
+const kCloneLocker = new Locker({ maxConcurrent: 10 });
 
 // Global
+// Spinner.DEFAULT_SPINNER = "dots";
 const token = process.env.GIT_TOKEN;
 const mapper = new Map();
 const exec = promisify(cp.exec);
@@ -38,32 +44,45 @@ const exec = promisify(cp.exec);
  * @returns {Promise<void>}
  */
 async function cloneRep(orgaName, repName) {
-    const dir = join(__dirname, "clones", repName);
-    const url = `https://github.com/${orgaName}/${repName}`;
+    const free = await kCloneLocker.acquireOne();
+    const spin = new Spinner({
+        prefixText: kleur.cyan().bold(`${repName}`)
+    }).start();
 
-    console.log(`Cloning: ${url}`);
-    await git.clone({
-        fs, http, dir, url,
-        onAuth() {
-            return { username: process.env.GIT_TOKEN, password: "x-oauth-basic" };
-        },
-        singleBranch: true,
-        noCheckout: true,
-        corsProxy: "https://cors.isomorphic-git.org"
-    });
+    try {
+        const dir = join(__dirname, "clones", repName);
+        const url = `https://github.com/${orgaName}/${repName}`;
 
-    const prefix = mapper.has(repName) ? mapper.get(repName) : repName;
-    await exec(`gource --output-custom-log history/${repName}.txt clones/${repName}`);
-    await exec(`sed -i -r "s#(.+)\\|#\\1|/${prefix}#" history/${repName}.txt`);
-}
+        spin.text = kleur.white().bold(`Cloning git repo ${kleur.yellow().bold(url)}`);
+        await git.clone({
+            fs, http, dir, url,
+            onAuth() {
+                return { username: process.env.GIT_TOKEN, password: "x-oauth-basic" };
+            },
+            singleBranch: true,
+            noCheckout: true,
+            corsProxy: "https://cors.isomorphic-git.org"
+        });
 
-/**
- * @function cloneError
- * @param {!any} error error
- * @returns {void}
- */
-function cloneError(error) {
-    console.error(error);
+        const prefix = mapper.has(repName) ? mapper.get(repName) : repName;
+
+        spin.text = kleur.white().bold("Execute gource command");
+        await exec(`gource --output-custom-log history/${repName}.txt clones/${repName}`);
+
+        spin.text = kleur.white().bold("Execute sed command");
+        await exec(`sed -i -r "s#(.+)\\|#\\1|/${prefix}#" history/${repName}.txt`);
+
+        const executionTime = kleur.cyan().bold(ms(Number(spin.elapsedTime.toFixed(2))));
+        spin.succeed(kleur.green().bold(`Successfully managed in ${executionTime}`));
+    }
+    catch (err) {
+        spin.failed(kleur.bold().red(err.message));
+
+        throw err;
+    }
+    finally {
+        free();
+    }
 }
 
 /**
@@ -85,7 +104,10 @@ async function getAllRepo(orgaName, kind = "orgs") {
             .map((repo) => cloneRep(orgaName, repo.name))
     );
 
-    cloneResults.filter((result) => result.status === "rejected").forEach(cloneError);
+    console.log(" > Show clone errors: ");
+    cloneResults
+        .filter((result) => result.status === "rejected")
+        .forEach((error) => console.log(error?.message));
 }
 
 /**
@@ -94,6 +116,7 @@ async function getAllRepo(orgaName, kind = "orgs") {
  * @returns {Promise<void>}
  */
 async function main() {
+    console.log(" > Loading configuration.");
     try {
         const buffer = await readFile(join(__dirname, "src", "config", `${GITHUB_ORGA}.json`));
         const mappingJSON = JSON.parse(buffer.toString());
@@ -108,9 +131,11 @@ async function main() {
     }
 
     // Create history/combined
+    console.log(" > Creating history and combined directory!");
     await mkdir(join(HISTORY_DIR, "combined"), { recursive: true });
 
     // Cleanup history dir
+    console.log(" > Cleaning /history dir from previous run");
     try {
         const files = await readdir(HISTORY_DIR);
         await Promise.allSettled(
@@ -125,6 +150,7 @@ async function main() {
     try {
         await getAllRepo(GITHUB_ORGA, GITHUB_KIND);
 
+        console.log(" > Processing combined history before executing gource!");
         await exec("cat history/*.txt | sort > history/combined/fullLog.txt");
         const child = cp.spawn("gource.cmd", ["history/combined/fullLog.txt", "-s", "0.2"]);
         await new Promise((resolve, reject) => {
